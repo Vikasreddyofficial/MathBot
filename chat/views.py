@@ -1,12 +1,9 @@
-# chat/views.py
-
 from django.shortcuts import render
 from django.http import JsonResponse
 import ollama
 
-# Pull the model to ensure it's available
+# Ensure the model is available
 ollama.pull('llama3')
-
 
 def chat_with_llm(question):
     try:
@@ -19,7 +16,6 @@ def chat_with_llm(question):
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
-
 
 def chat_view(request):
     if request.method == "POST":

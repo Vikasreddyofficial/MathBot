@@ -54,6 +54,16 @@
             background: linear-gradient(135deg, rgba(96,143,149,1) 0%,rgba(0,133,136,1) 9%,rgba(12,36,73,1) 52%,rgba(26,30,59,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#608f95', endColorstr='#1a1e3b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
         }
+        .center-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        #message, .input-group-btn > .btn {
+            pointer-events: none;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -74,6 +84,9 @@
                         </strong>
                     </div>
                     <div class="panel-body fixed-panel">
+                        <div class="center-button">
+                            <button class="btn btn-info" id="start-button">Start</button>
+                        </div>
                         <ul class="media-list" id="response"></ul>
                     </div>
                     <div class="panel-footer">

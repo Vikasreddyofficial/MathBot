@@ -1,12 +1,68 @@
+{% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: rgb(96,143,149); /* Old browsers */
+            background: -moz-linear-gradient(135deg, rgba(96,143,149,1) 0%, rgba(26,30,59,1) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(135deg, rgba(96,143,149,1) 0%, rgba(26,30,59,1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(135deg, rgba(96,143,149,1) 0%, rgba(26,30,59,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#608f95', endColorstr='#1a1e3b', GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+        .selection-container {
+            margin: 20px;
+        }
+        select {
+            font-size: 1em;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #0c2735;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #19313c;
+        }
+        .mathbot-img {
+            margin-top: 20px;
+        }
+        .mathbot-img img {
+            width: 600px; /* Adjust the width as needed */
+            height: auto; /* Maintain aspect ratio */
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Home Page</h1>
-    <p><a href="{% url 'chat' %}">Go to Chat</a></p>
+    <h1>Welcome to Complex</h1>
+    <p>Select your class:</p>
+    <div class="selection-container">
+        <form action="{% url 'chat' %}" method="get">
+            <select name="class" id="class">
+                {% for i in 1|to_range:12 %}
+                    <option value="{{ i }}">Class {{ i }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Chat Now!!!</button>
+        </form>
+    </div>
+    <div class="mathbot-img">
+        <img src="{% static 'mathbot.png' %}" alt="MathBot Image">
+    </div>
 </body>
 </html>
