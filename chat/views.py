@@ -13,14 +13,14 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Function to get responses from Gemini Pro model
-def get_gemini_response(question, class_level, subject):
+def get_gemini_response(question):
     try:
         # Get Gemini Pro model
         model = genai.GenerativeModel("gemini-pro")
         chat = model.start_chat(history=[])
 
         # Send prompt and get response
-        prompt = f"You are a teacher for math for Class 10, answer the following question if it is related to the given subject: {question}. If not, say 'I can't answer that or you may have chosen the wrong subject.'"
+        prompt = f"You are a teacher for math for Class 10, answer the following question if it is related to the given subject: {question}. Please give the answer in step by step not as paragraph.If not, say 'I can't answer that or you may have chosen the wrong subject.'"
         response = chat.send_message(prompt, stream=True)
         return response
     except ValueError as e:

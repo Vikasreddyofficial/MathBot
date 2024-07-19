@@ -17,14 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const newMessage = document.createElement('li');
         newMessage.className = 'bot-message'; // Add class for bot message
 
-        const botImage = document.createElement('img');
-        botImage.src = '{% static "calci.png" %}';
-        botImage.className = 'bot-image'; // Add a class for image if needed
-
         const botText = document.createElement('span');
         botText.textContent = 'Bot: Hi, I’m here to help with math problems';
 
-        newMessage.appendChild(botImage);
         newMessage.appendChild(botText);
         responseDiv.appendChild(newMessage);
 
@@ -49,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
             },
-            body: new URLSearchParams({
+            body: JSON.stringify({
                 'message': message
             })
         })
@@ -59,14 +54,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const botMessage = document.createElement('li');
             botMessage.className = 'bot-message'; // Add class for bot message
 
-            const botImage = document.createElement('img');
-            botImage.src = '{% static "calci.png" %}';
-            botImage.className = 'bot-image'; // Add a class for image if needed
-
             const botText = document.createElement('span');
-            botText.textContent = 'Bot: ' + data.response;
+            botText.innerHTML = 'Bot: <br>' + data.response.replace(/\n/g, '<br>'); // Convert new lines to <br>
 
-            botMessage.appendChild(botImage);
             botMessage.appendChild(botText);
             responseDiv.appendChild(botMessage);
             messageInput.value = '';
