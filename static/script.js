@@ -13,30 +13,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     startButton.addEventListener('click', function() {
-        fetch('/chat/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
-            },
-            body: new URLSearchParams({
-                'message': 'I am a school-going student, please restrict to the task of solving math-related problems. I request to give the answer in detailed steps.'
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            const newMessage = document.createElement('li');
-            newMessage.textContent = 'Response: ' + data.response;
-            responseDiv.appendChild(newMessage);
-            startButton.style.display = 'none';
-            enableChat();
-        })
-        .catch(error => console.error('Error:', error));
+        // Print "Hi" to the responseDiv
+        const newMessage = document.createElement('li');
+        newMessage.className = 'bot-message'; // Add class for bot message
+
+        const botImage = document.createElement('img');
+        botImage.src = '{% static "calci.png" %}';
+        botImage.className = 'bot-image'; // Add a class for image if needed
+
+        const botText = document.createElement('span');
+        botText.textContent = 'Bot: Hi, I’m here to help with math problems';
+
+        newMessage.appendChild(botImage);
+        newMessage.appendChild(botText);
+        responseDiv.appendChild(newMessage);
+
+        // Hide the start button and enable the chat
+        startButton.style.display = 'none';
+        enableChat();
     });
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         const message = messageInput.value;
+
+        // Create and display the user's message
+        const userMessage = document.createElement('li');
+        userMessage.textContent = 'You: ' + message;
+        userMessage.className = 'user-message';
+        responseDiv.appendChild(userMessage);
 
         fetch('/chat/', {
             method: 'POST',
@@ -50,9 +55,20 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            const newMessage = document.createElement('li');
-            newMessage.textContent = 'Response: ' + data.response;
-            responseDiv.appendChild(newMessage);
+            // Create and display the bot's response
+            const botMessage = document.createElement('li');
+            botMessage.className = 'bot-message'; // Add class for bot message
+
+            const botImage = document.createElement('img');
+            botImage.src = '{% static "calci.png" %}';
+            botImage.className = 'bot-image'; // Add a class for image if needed
+
+            const botText = document.createElement('span');
+            botText.textContent = 'Bot: ' + data.response;
+
+            botMessage.appendChild(botImage);
+            botMessage.appendChild(botText);
+            responseDiv.appendChild(botMessage);
             messageInput.value = '';
         })
         .catch(error => console.error('Error:', error));

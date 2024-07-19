@@ -7,30 +7,75 @@
     <title>Chatbot</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <style type="text/css">
+        /* Set body background to the image */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'back.jpg' %}"); /* Background image */
+            background-size: 100%; /* Ensure the image covers the whole background */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent repeating the image */
+            color: black; /* Text color for better readability */
+            text-align: center;
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+            height: 100vh; /* Full viewport height */
+            overflow: hidden; /* Prevent scrollbars */
+        }
+        .container-custom {
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px; /* Adjust as needed */
+            width: 100%;
+            margin: 0 auto;
+        }
         .fixed-panel {
-            min-height: 400px;
-            max-height: 400px;
-            background-color: #19313c;
-            color: white;
+            min-height: 70vh; /* 70% of viewport height */
+            max-height: 80vh; /* 80% of viewport height */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            color: black; /* Text color */
             overflow: auto;
+            width: 100%;
+            margin: 0 auto;
         }
         .media-list {
-            overflow: auto;
-            clear: both;
-            display: table;
-            overflow-wrap: break-word;
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Space between messages */
+            padding: 10px;
+            margin: 0;
+            list-style-type: none;
+        }
+        .media-list li {
+            max-width: 80%; /* Adjust as needed */
+            padding: 10px;
+            border-radius: 10px;
             word-wrap: break-word;
-            word-break: normal;
-            line-break: strict;
+            display: flex; /* Ensure flexbox layout for items */
+            align-items: center; /* Center items vertically */
+        }
+        .bot-message {
+            background-color: #A6BDFF; /* Light gray or other color */
+            color: black; /* Set text color to black */
+            text-align: left; /* Text align to the left */
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between image and text */
+        }
+        .user-message {
+            background-color: #FF9533; /* Orange background or other color */
+            color: black; /* Set text color to black */
+            text-align: right; /* Text align to the right */
+            align-self: flex-end; /* Align to the right */
         }
         .panel {
             margin-bottom: 20px;
             background-color: #fff;
             border: 6px solid transparent;
-            border-radius: 25px;
-            -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
-            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            border-radius: 30px; /* Increased radius for smoother edges */
+            box-shadow: 0 4px 8px rgba(0,0,0,.1); /* Soft shadow for smoother look */
         }
         .panel-info {
             border-color: #0c2735;
@@ -39,20 +84,50 @@
             color: white;
             background-color: #0c2735;
             border-color: #0c2735;
+            text-align: left; /* Align text to the left */
+            padding: 15px; /* Add padding for better spacing */
+            display: flex; /* Flexbox for aligning items */
+            align-items: center; /* Align items vertically center */
+            border-top-left-radius: 30px; /* Rounded corners for top-left */
+            border-top-right-radius: 30px; /* Rounded corners for top-right */
+        }
+        .panel-info>.panel-heading img.calci-logo {
+            width: 2.5em; /* Match the font-size of the h1 heading */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 15px; /* Space between image and heading text */
+        }
+        .panel-info>.panel-heading .heading-text {
+            display: flex;
+            flex-direction: column; /* Stack the headings vertically */
+        }
+        .panel-info>.panel-heading h1 {
+            font-size: 2.5em; /* Font size for "Calci" */
+            margin: 0;
+        }
+        .panel-info>.panel-heading h2 {
+            font-size: 1.5em; /* Font size for "Online" */
+            margin: 0;
+            color: #A0C4FF; /* Optional: Change color of "Online" */
+            position: relative; /* Required for positioning the pseudo-element */
+            margin-left: 20px; /* Decrease this value slightly to reduce space */
+        }
+        .panel-info>.panel-heading h2::before {
+            content: ''; /* No text content */
+            position: absolute; /* Position relative to the parent h2 */
+            left: -25px; /* Position the dot to the left of the text */
+            top: 50%; /* Vertically center the dot */
+            transform: translateY(-50%); /* Center the dot vertically */
+            width: 10px; /* Size of the dot */
+            height: 10px; /* Size of the dot */
+            background-color: #28a745; /* Green color */
+            border-radius: 50%; /* Make it a circle */
         }
         .panel-footer {
             padding: 10px 15px;
-            background-color: #0c2735;
+            background-color: #FFFFFF;
             border-top: 1px solid #0c2735;
-            border-bottom-right-radius: 3px;
-            border-bottom-left-radius: 3px
-        }
-        body {
-            background: rgb(96,143,149); /* Old browsers */
-            background: -moz-linear-gradient(-45deg, rgba(96,143,149,1) 0%, rgba(0,133,136,1) 9%, rgba(12,36,73,1) 52%, rgba(26,30,59,1) 100%); /* FF3.6-15 */
-            background: -webkit-linear-gradient(-45deg, rgba(96,143,149,1) 0%,rgba(0,133,136,1) 9%,rgba(12,36,73,1) 52%,rgba(26,30,59,1) 100%); /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(135deg, rgba(96,143,149,1) 0%,rgba(0,133,136,1) 9%,rgba(12,36,73,1) 52%,rgba(26,30,59,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#608f95', endColorstr='#1a1e3b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+            border-bottom-right-radius: 30px; /* Rounded corners for bottom-right */
+            border-bottom-left-radius: 30px; /* Rounded corners for bottom-left */
         }
         .center-button {
             display: flex;
@@ -64,24 +139,49 @@
             pointer-events: none;
             opacity: 0.5;
         }
+        .bot-image {
+            width: 2.5em; /* Adjust as needed */
+            height: auto;
+        }
+        .input-group {
+            background-color: #FF9533; /* Orange background for input group */
+            border-radius: 25px; /* Rounded corners */
+            padding: 5px; /* Add some padding */
+        }
+        .form-control {
+            border: 1px solid #FF9533; /* Orange border for the input field */
+            border-radius: 25px; /* Rounded corners */
+            background-color: #FFE5CC; /* Lighter orange background for the input field */
+            color: #333; /* Dark text color for better readability */
+        }
+        .input-group-btn > .btn {
+            background-color: #FF9533; /* Orange background for the button */
+            border: none; /* Remove border */
+            border-radius: 25px; /* Rounded corners */
+            color: white; /* White text color */
+        }
+        .input-group-btn > .btn:hover,
+        .input-group-btn > .btn:focus {
+            background-color: #e68a2c; /* Darker orange for hover and focus */
+        }
+        .send-icon {
+            width: 1.5em; /* Adjust size as needed */
+            height: auto;
+            vertical-align: middle; /* Aligns the icon properly with the text */
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container container-custom">
         <div class="row">
-            <h3 class="text-center">
-                <small><strong></strong></small>
-                <font color="white">Calci</font>
-                <small><strong>Here !!!</strong></small>
-                <font color="white"> </font>
-            </h3>
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-8 col-md-offset-2">
                 <div id="chatPanel" class="panel panel-info">
                     <div class="panel-heading">
-                        <strong>
-                            <span class="glyphicon glyphicon-globe"></span> 
-                            Prompt your Problem
-                        </strong>
+                        <img src="{% static 'calci.png' %}" alt="Calci Logo" class="calci-logo" />
+                        <div class="heading-text">
+                            <h1>Calci</h1>
+                            <h2>Online</h2>
+                        </div>
                     </div>
                     <div class="panel-body fixed-panel">
                         <div class="center-button">
@@ -95,7 +195,9 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Enter Message" name="message" id="message" autofocus />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-info" type="submit">Send</button>
+                                    <button class="btn btn-info" type="submit">
+                                        <img src="{% static 'send.png' %}" alt="Send Icon" class="send-icon"/>
+                                    </button>
                                 </span>
                             </div>
                         </form>

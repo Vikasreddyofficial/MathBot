@@ -6,38 +6,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: rgb(96,143,149); /* Old browsers */
-            background: -moz-linear-gradient(135deg, rgba(96,143,149,1) 0%, rgba(26,30,59,1) 100%); /* FF3.6-15 */
-            background: -webkit-linear-gradient(135deg, rgba(96,143,149,1) 0%, rgba(26,30,59,1) 100%); /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(135deg, rgba(96,143,149,1) 0%, rgba(26,30,59,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#608f95', endColorstr='#1a1e3b', GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+            background: rgb(255,153,51); /* Fallback color */
+            background: -moz-linear-gradient(135deg, rgba(255,153,51,1) 0%, rgba(255,102,0,1) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(135deg, rgba(255,153,51,1) 0%, rgba(255,102,0,1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(135deg, rgba(255,153,51,1) 0%, rgba(255,102,0,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff9933', endColorstr='#ff6600', GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
             color: white;
             text-align: center;
             padding: 50px;
+        }
+        h1 {
+            font-family: 'Audiowide', sans-serif; /* Apply Audiowide font */
+            font-size: 4em; /* Increase font size */
+            margin-bottom: 20px; /* Add some space below the heading */
+        }
+        p {
+            font-family: 'Audiowide', sans-serif; /* Apply Audiowide font */
+            font-size: 2em; /* Increase font size */
+            margin-bottom: 20px; /* Add some space below the heading */
         }
         .selection-container {
             margin: 20px;
         }
         select {
-            font-size: 1em;
+            font-size: 1.2em; /* Match font size to button */
+            font-family: 'Audiowide', sans-serif; /* Match font to button */
             padding: 10px;
             margin: 10px 0;
+            border-radius: 15px; /* Smooth edges */
+            border: 2px solid #FF6600; /* Orange border */
+            background-color: #fff; /* White background for contrast */
+            color: #333; /* Dark text color for readability */
         }
         button {
             font-size: 1.2em;
-            color: #fff;
-            background-color: #0c2735;
+            font-family: 'Audiowide', sans-serif; /* Match font */
+            color: #000; /* Black text color */
+            background-color: #fff; /* White background */
             padding: 10px 20px;
             text-decoration: none;
-            border: none;
-            border-radius: 5px;
+            border: 2px solid #FF6600; /* Orange border */
+            border-radius: 15px; /* Smooth edges */
             cursor: pointer;
         }
         button:hover {
-            background-color: #19313c;
+            background-color: #FF6600; /* Orange background for hover */
+            color: #fff; /* White text color on hover */
         }
         .mathbot-img {
             margin-top: 20px;
@@ -50,7 +68,7 @@
 </head>
 <body>
     <h1>Welcome to Complex</h1>
-    <p>Select your class:</p>
+    <p>Select your class and subject:</p>
     <div class="selection-container">
         <form action="{% url 'chat' %}" method="get">
             <select name="class" id="class">
@@ -58,11 +76,18 @@
                     <option value="{{ i }}">Class {{ i }}</option>
                 {% endfor %}
             </select>
+            <select name="subject" id="subject">
+                <option value="math">Mathematics</option>
+                <option value="science">Science</option>
+                <option value="history">History</option>
+                <option value="geography">Geography</option>
+                <!-- Add more subjects as needed -->
+            </select>
             <button type="submit">Chat Now!!!</button>
         </form>
     </div>
     <div class="mathbot-img">
-        <img src="{% static 'mathbot.png' %}" alt="MathBot Image">
+        <img src="{% static 'calci.png' %}" alt="MathBot Image">
     </div>
 </body>
 </html>

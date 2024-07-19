@@ -48,3 +48,8 @@ button:hover {
 #response {
     margin-top: 20px;
 }
+/* Add this CSS to your existing styles */
+#message::placeholder {
+    color: #ffffff; /* Bright white color for the placeholder text */
+    opacity: 0.8; /* Adjust opacity for visibility */
+}
